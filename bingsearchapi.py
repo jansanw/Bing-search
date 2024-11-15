@@ -78,5 +78,19 @@ def search():
         return jsonify({"error": "Invalid request format."})
 
 
+@app.route('/search', methods=['GET'])
+def search():
+    query = request.args.get('query')
+    if query:
+        try:
+            result = process_query(query)
+            return jsonify({"data": result})
+        except Exception as e:
+            print(f"An error occurred while processing the query: {str(e)}")
+            return jsonify({"error": "An error occurred while processing the query."})
+    else:
+        return jsonify({"error": "Invalid request format."})
+
+
 if __name__ == '__main__':
     app.run(host='127.0.0.1', port=10000)
